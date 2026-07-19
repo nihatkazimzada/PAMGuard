@@ -2,7 +2,7 @@
 
 Privileged Access Management system — two components working together to provide just-in-time SSH access with session recording, audit logging, and suspicious activity detection.
 
-# Team members
+# Contributors
 - Elnur Nuriyev Seyfaddin (https://github.com/elnurnueiyev)
 - Aysel Mammadova Vugar ()
 - Ali Mursalzada Samir (https://github.com/mursalzadaali-coder)
