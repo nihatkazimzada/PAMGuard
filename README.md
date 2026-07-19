@@ -44,7 +44,16 @@ PAMGuard/
 │   └── tunnel.py
 └── Tenant Agent/             ← Tenant Agent (managed VM agent)
     ├── README.md
-    └── ...
+    └── agent.py                   ← Main tenant agent
+    ├── install.sh                 ← Installation script
+    ├── firewall.sh                ← Firewall configuration
+    ├── setup-gateway-user.sh      ← Creates gateway SSH user
+    ├── config.yaml.example        ← Example configuration
+    ├── .env.example               ← Environment variables example
+    ├── pam-tenant-agent.service   ← Systemd service
+    ├── pam-agent-logrotate        ← Logrotate configuration
+    ├── PAM_TENANT_AGENT_REPORT.md ← Technical documentation
+    └── .gitignore
 ```
 
 ## Setup Order
