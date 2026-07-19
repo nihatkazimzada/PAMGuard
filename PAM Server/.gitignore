@@ -1,0 +1,52 @@
+# Secrets (never commit)
+.env
+.env.local
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Node (frontend build artifacts)
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# Database (SQLite dev file)
+*.db
+*.sqlite
+
+# Logs
+*.log
+/tmp/
+
+# SSH deploy key (public key is fine, but never private keys)
+*.key
+*.pem
+!deploy_key.pub
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Docker
+.docker/
+
+# Development backup archives
+LAST_PAM_PROJECT/
+LAST_PAM_PROJECT.tar.gz
+LAST_PAM_PROJECT.zip

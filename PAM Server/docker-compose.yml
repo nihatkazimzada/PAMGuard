@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: pamdb
+      POSTGRES_USER: pamuser
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pampass}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pamuser -d pamdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend-pg
+    environment:
+      DATABASE_URL: postgresql+asyncpg://pamuser:pampass@postgres:5432/pamdb
+      JWT_SECRET: ${JWT_SECRET:-pam-server-jwt-secret-key-2024}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-pam-server-refresh-secret-key-2024}
+      FRONTEND_URL: http://localhost
+      AGENT_API_KEY: ${AGENT_API_KEY:-shared-agent-api-key-pam2024}
+      SSH_KEY_PATH: /home/administrator/.ssh/id_rsa
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ~/.ssh:/home/administrator/.ssh:ro
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
