@@ -37,6 +37,7 @@ PAMGuard/
 │   ├── .gitignore
 │   ├── backend-python/       ← Python source
 │   ├── frontend/             ← React frontend (alternative)
+│   ├── reports/               ← Technical documentation
 │   ├── docker-compose.yml
 │   ├── Dockerfile.*
 │   ├── nginx.conf
