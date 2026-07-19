@@ -51,9 +51,9 @@ python3 seed.py
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `DATABASE_URL` | No | `sqlite+aiosqlite:///./pam.db` | Database connection string |
-| `JWT_SECRET` | No | `pam-server-jwt-secret-key-2024` | HMAC key for access token signing |
-| `JWT_REFRESH_SECRET` | No | `pam-server-refresh-secret-key-2024` | HMAC key for refresh token signing |
-| `AGENT_API_KEY` | No | `shared-agent-api-key-pam2024` | Shared secret for agent communication |
+| `JWT_SECRET` | No | `&lt;jwt_secret&gt;` | HMAC key for access token signing |
+| `JWT_REFRESH_SECRET` | No | `&lt;jwt_refresh_secret&gt;` | HMAC key for refresh token signing |
+| `AGENT_API_KEY` | No | `&lt;agent_api_key&gt;` | Shared secret for agent communication |
 | `FRONTEND_URL` | No | `http://localhost:5173` | CORS allowed origin |
 | `SSH_KEY_PATH` | No | `~/.ssh/id_rsa` | Default SSH key for terminal sessions |
 | `PORT` | No | `3001` | Server listen port |

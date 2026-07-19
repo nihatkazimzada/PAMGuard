@@ -40,8 +40,8 @@ def verify_token(token: str, secret: str = JWT_SECRET) -> Optional[dict]:
 **Critical finding — hardcoded secrets in source (`config.py`, lines 4-5):**
 
 ```python
-JWT_SECRET = os.getenv("JWT_SECRET", "pam-server-jwt-secret-key-2024")
-JWT_REFRESH_SECRET = os.getenv("JWT_REFRESH_SECRET", "pam-server-refresh-secret-key-2024")
+JWT_SECRET = os.getenv("JWT_SECRET", "&lt;jwt_secret&gt;")
+JWT_REFRESH_SECRET = os.getenv("JWT_REFRESH_SECRET", "&lt;jwt_refresh_secret&gt;")
 ```
 
 Both secrets fall back to hardcoded strings if environment variables are not set. Any developer who has access to the source code knows the JWT signing key. Combined with the HS256 algorithm (symmetric), this means anyone with the source can forge valid tokens for any user.
@@ -501,8 +501,8 @@ The API key is returned in the `GET /api/companies` response (line 458). While t
 **File:** `config.py`, lines 4-5
 
 ```python
-JWT_SECRET = os.getenv("JWT_SECRET", "pam-server-jwt-secret-key-2024")
-JWT_REFRESH_SECRET = os.getenv("JWT_REFRESH_SECRET", "pam-server-refresh-secret-key-2024")
+JWT_SECRET = os.getenv("JWT_SECRET", "&lt;jwt_secret&gt;")
+JWT_REFRESH_SECRET = os.getenv("JWT_REFRESH_SECRET", "&lt;jwt_refresh_secret&gt;")
 ```
 
 Both JWT secrets have hardcoded fallback values. In the live deployment, no `.env` file was found — the secrets are likely using the hardcoded defaults. Anyone who knows these strings can forge valid JWT tokens for any user.
@@ -512,7 +512,7 @@ Both JWT secrets have hardcoded fallback values. In the live deployment, no `.en
 **File:** `config.py`, line 8
 
 ```python
-AGENT_API_KEY = os.getenv("AGENT_API_KEY", "shared-agent-api-key-pam2024")
+AGENT_API_KEY = os.getenv("AGENT_API_KEY", "&lt;agent_api_key&gt;")
 ```
 
 There is a single shared API key for all tenant agents. This means:

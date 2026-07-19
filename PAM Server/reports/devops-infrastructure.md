@@ -18,7 +18,7 @@ services:
     environment:
       POSTGRES_DB: pamdb
       POSTGRES_USER: pamuser
-      POSTGRES_PASSWORD: pampass
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-<db_password>}
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
@@ -34,11 +34,11 @@ services:
       context: .
       dockerfile: Dockerfile.backend-pg
     environment:
-      DATABASE_URL: postgresql+asyncpg://pamuser:pampass@postgres:5432/pamdb
-      JWT_SECRET: ${JWT_SECRET:-pam-server-jwt-secret-key-2024}
-      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-pam-server-refresh-secret-key-2024}
+      DATABASE_URL: postgresql+asyncpg://pamuser:${POSTGRES_PASSWORD:-<db_password>}@postgres:5432/pamdb
+      JWT_SECRET: ${JWT_SECRET:-&lt;jwt_secret&gt;}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-&lt;jwt_refresh_secret&gt;}
       FRONTEND_URL: http://localhost
-      AGENT_API_KEY: ${AGENT_API_KEY:-shared-agent-api-key-pam2024}
+      AGENT_API_KEY: ${AGENT_API_KEY:-&lt;agent_api_key&gt;}
       SSH_KEY_PATH: /home/administrator/.ssh/id_rsa
     ports:
       - "3001:3001"
@@ -67,12 +67,12 @@ volumes:
 - Data persisted via named volume `pgdata`
 - Exposes port 5432
 - Health check runs `pg_isready` every 5 seconds — backend waits for this before starting
-- Uses hardcoded credentials (`pamuser`/`pampass`)
+- Uses hardcoded credentials (`pamuser`/`<db_password>`)
 
 **`backend`** (Python FastAPI)
 - Builds from `Dockerfile.backend-pg` (includes `asyncpg` + `libpq-dev`)
 - 6 environment variables configured:
-  - `DATABASE_URL` points to the `postgres` service via Docker DNS (`postgresql+asyncpg://pamuser:pampass@postgres:5432/pamdb`)
+  - `DATABASE_URL` points to the `postgres` service via Docker DNS (`postgresql+asyncpg://pamuser:${POSTGRES_PASSWORD:-<db_password>}@postgres:5432/pamdb`)
   - `JWT_SECRET` / `JWT_REFRESH_SECRET` — use env var or fallback to hardcoded defaults
   - `FRONTEND_URL` — set to `http://localhost` (used by CORS middleware)
   - `AGENT_API_KEY` — shared key for agent-to-server HMAC
@@ -349,7 +349,7 @@ VM1 ← VM2: TCP port 3001 (PAM Server API)
 
 ```yaml
 pam_server_url: http://10.0.2.20:3001
-api_key: pam_kapital_627649a1049d   # or pam_acme_94e7673c8610
+api_key: <company_api_key>   # e.g. pam_kapital_<uuid> or pam_acme_<uuid>
 listener_port: 8800
 heartbeat_interval: 25  # seconds
 ```

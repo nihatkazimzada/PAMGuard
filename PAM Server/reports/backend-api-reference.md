@@ -424,7 +424,7 @@ Response (200):
 
 ```
 POST /api/agent/register
-X-API-Key: pam_kapital_627649a1049d
+X-API-Key: <company_api_key>
 X-Signature: <hmac-sha256-of-body>
 Content-Type: application/json
 

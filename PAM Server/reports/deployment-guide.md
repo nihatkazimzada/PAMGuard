@@ -44,7 +44,7 @@ postgres:
   environment:
     POSTGRES_DB: pamdb
     POSTGRES_USER: pamuser
-    POSTGRES_PASSWORD: pampass
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-<db_password>}
   volumes:
     - pgdata:/var/lib/postgresql/data
   healthcheck:
@@ -69,11 +69,11 @@ backend:
     context: .
     dockerfile: Dockerfile.backend-pg
   environment:
-    DATABASE_URL: postgresql+asyncpg://pamuser:pampass@postgres:5432/pamdb
-    JWT_SECRET: ${JWT_SECRET:-pam-server-jwt-secret-key-2024}
-    JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-pam-server-refresh-secret-key-2024}
+    DATABASE_URL: postgresql+asyncpg://pamuser:${POSTGRES_PASSWORD:-<db_password>}@postgres:5432/pamdb
+    JWT_SECRET: ${JWT_SECRET:-&lt;jwt_secret&gt;}
+    JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-&lt;jwt_refresh_secret&gt;}
     FRONTEND_URL: http://localhost
-    AGENT_API_KEY: ${AGENT_API_KEY:-shared-agent-api-key-pam2024}
+    AGENT_API_KEY: ${AGENT_API_KEY:-&lt;agent_api_key&gt;}
     SSH_KEY_PATH: /home/administrator/.ssh/id_rsa
   ports:
     - "3001:3001"
@@ -91,10 +91,10 @@ backend:
 | Variable | Default | Purpose |
 |----------|---------|---------|
 | `DATABASE_URL` | — | PostgreSQL connection string (`postgresql+asyncpg://user:pass@host:5432/db`) |
-| `JWT_SECRET` | `pam-server-jwt-secret-key-2024` | HMAC key for access token signing |
-| `JWT_REFRESH_SECRET` | `pam-server-refresh-secret-key-2024` | HMAC key for refresh token signing |
+| `JWT_SECRET` | `&lt;jwt_secret&gt;` | HMAC key for access token signing |
+| `JWT_REFRESH_SECRET` | `&lt;jwt_refresh_secret&gt;` | HMAC key for refresh token signing |
 | `FRONTEND_URL` | `http://localhost` | CORS allowed origin |
-| `AGENT_API_KEY` | `shared-agent-api-key-pam2024` | Fallback key for agent communication |
+| `AGENT_API_KEY` | `&lt;agent_api_key&gt;` | Fallback key for agent communication |
 | `SSH_KEY_PATH` | `~/.ssh/id_rsa` | Path to the SSH private key used for terminal sessions |
 
 **Host volume mount:** The `~/.ssh` directory is mounted read-only into the container so the backend can use the host's SSH key for terminal sessions to target servers.

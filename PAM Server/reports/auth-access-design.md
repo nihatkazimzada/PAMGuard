@@ -30,8 +30,8 @@ The system uses a dual-token JWT strategy: a short-lived access token for API re
 
 Both keys are defined in `config.py:4-5`:
 ```python
-JWT_SECRET = os.getenv("JWT_SECRET", "pam-server-jwt-secret-key-2024")
-JWT_REFRESH_SECRET = os.getenv("JWT_REFRESH_SECRET", "pam-server-refresh-secret-key-2024")
+JWT_SECRET = os.getenv("JWT_SECRET", "&lt;jwt_secret&gt;")
+JWT_REFRESH_SECRET = os.getenv("JWT_REFRESH_SECRET", "&lt;jwt_refresh_secret&gt;")
 JWT_ALGORITHM = "HS256"
 ```
 
@@ -424,7 +424,7 @@ The PAM Server and Tenant Agent machines communicate over HTTP without a TLS cer
 The shared key is the company's `api_key` field in the `companies` table. Each company has a unique `api_key` that is shared with their respective tenant agent. The codebase also includes a fallback default key in `config.py:8`:
 
 ```python
-AGENT_API_KEY = os.getenv("AGENT_API_KEY", "shared-agent-api-key-pam2024")
+AGENT_API_KEY = os.getenv("AGENT_API_KEY", "&lt;agent_api_key&gt;")
 ```
 
 This fallback is used when a company record has no `api_key` set but is intended for development only.
@@ -515,5 +515,5 @@ The revoke call (`main.py:166-171`) sends:
 - Each company's `api_key` is set when the company record is created
 - The API key is stored in the `companies.api_key` column (unique, nullable)
 - The agent receives its company's API key through out-of-band configuration (env variable or config file)
-- The development fallback `AGENT_API_KEY` (`"shared-agent-api-key-pam2024"`) is used when no company-specific key is set
+- The development fallback `AGENT_API_KEY` (`"&lt;agent_api_key&gt;"`) is used when no company-specific key is set
 - Agent records in the `agents` table also store their API key (`agents.api_key`) for cross-reference during heartbeat verification
