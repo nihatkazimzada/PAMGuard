@@ -3,10 +3,10 @@
 Privileged Access Management system — two components working together to provide just-in-time SSH access with session recording, audit logging, and suspicious activity detection.
 
 # Team members
-- Elnur Nuriyev Seyfaddin
-- Aysel Mammadova Vugar
-- Ali Mursalzada Samir
-- Nihat Kazimzada Ibrahim
+- Elnur Nuriyev Seyfaddin (https://github.com/elnurnueiyev)
+- Aysel Mammadova Vugar ()
+- Ali Mursalzada Samir (https://github.com/mursalzadaali-coder)
+- Nihat Kazimzada Ibrahim (https://github.com/nihatkazimzada)
 
 ## Architecture
 
