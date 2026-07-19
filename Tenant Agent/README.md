@@ -4,6 +4,7 @@ A lightweight, self-contained agent for Linux user/privilege management,
 built for the PAM (Privileged Access Management) system.
 
 > Part of the [PAMGuard](https://github.com/nihatkazimzada/PAMGuard) monorepo.
+> See [PAM Server README](../PAM%20Server/README.md) for the server-side component.
 
 ## Architecture
 
@@ -36,18 +37,20 @@ performs four main functions:
 
 ## Installation
 
-### 1. Copy files to the target server
+### 1. Get the agent files
+
+Clone the PAMGuard repo on the target machine:
 
 ```bash
-# On the target server (VM2), as root or with sudo:
-mkdir -p /opt/pam-agent
-# Copy all files from this directory to /opt/pam-agent/
+git clone https://github.com/nihatkazimzada/PAMGuard.git /opt/pamguard
+cd /opt/pamguard/Tenant\ Agent
 ```
+
+Or copy the `Tenant Agent/` directory to your target server.
 
 ### 2. Run the installer
 
 ```bash
-cd /opt/pam-agent
 sudo ./install.sh
 ```
 
@@ -58,7 +61,8 @@ The installer will:
 
 ### 3. Configure
 
-Copy `.env.example` to `.env` or use the config file approach:
+The agent uses a YAML config file at `/etc/pam-agent/config.yaml`.  
+The `.env.example` file is provided as a reference for configuration values.
 
 ```bash
 sudo vi /etc/pam-agent/config.yaml
@@ -168,6 +172,12 @@ The agent tails `/var/log/auth.log` and forwards:
 
 Events are batched and sent to `POST /api/agent/events` every heartbeat cycle.
 
+## Ports
+
+| Port | Service | Description |
+|------|---------|-------------|
+| 8800 | Agent HTTP API | Provision/revoke callbacks from PAM Server (restrict to PAM Server IP) |
+
 ## Security Notes
 
 - The agent's HTTP listener (port 8800) should be firewalled to the PAM
@@ -201,11 +211,14 @@ ps aux | grep pam-agent
 
 | File | Purpose |
 |------|---------|
-| `agent.py` | Main agent code |
-| `config.yaml.example` | Example configuration |
-| `pam-tenant-agent.service` | Systemd service unit |
-| `install.sh` | Installation script |
-| `firewall.sh` | UFW firewall configuration |
-| `README.md` | This file |
 | `.env.example` | Environment variable template |
 | `.gitignore` | Local gitignore for generated/secret files |
+| `agent.py` | Main agent code |
+| `config.yaml.example` | Example configuration |
+| `firewall.sh` | UFW firewall configuration |
+| `install.sh` | Installation script |
+| `pam-agent-logrotate` | Logrotate configuration |
+| `pam-tenant-agent.service` | Systemd service unit |
+| `PAM_TENANT_AGENT_REPORT.md` | Architectural deep-dive and failure modes |
+| `README.md` | This file |
+| `setup-gateway-user.sh` | Creates gateway SSH user for PAM Server |
