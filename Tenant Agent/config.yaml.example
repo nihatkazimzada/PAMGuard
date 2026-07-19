@@ -1,0 +1,26 @@
+# PAM Tenant Agent Configuration
+# Copy this to /etc/pam-agent/config.yaml and set proper permissions (chmod 600)
+
+server:
+  # URL of the PAM Server (VM1)
+  url: "http://<pam-server-ip>:3001"
+  # Pre-issued API key from the PAM Server
+  api_key: "change-me-to-real-api-key"
+  # Tenant company ID assigned by PAM Server
+  company_id: "<your-company-id>"
+  # Human-readable tenant name
+  tenant_name: "<your-tenant-name>"
+
+agent:
+  # Port the agent's HTTP listener runs on (for provision/revoke callbacks)
+  listen_port: 8800
+  # Address to bind (0.0.0.0 = all interfaces, but firewall restricts to PAM Server)
+  listen_addr: "0.0.0.0"
+  # Heartbeat interval in seconds (15-30 recommended)
+  heartbeat_interval: 25
+
+# IP address of the PAM Server (for firewall rules and request validation)
+pam_server_ip: "<pam-server-ip>"
+
+# Agent version (bump on updates)
+agent_version: "1.0.0"
