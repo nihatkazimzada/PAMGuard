@@ -4,7 +4,7 @@ Privileged Access Management system — two components working together to provi
 
 # Contributors
 - Elnur Nuriyev Seyfaddin (https://github.com/elnurnueiyev)
-- Aysel Mammadova Vugar ()
+- Aysel Mammadova Vugar (https://github.com/aysel947)
 - Ali Mursalzada Samir (https://github.com/mursalzadaali-coder)
 - Nihat Kazimzada Ibrahim (https://github.com/nihatkazimzada)
 
